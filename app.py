@@ -51,7 +51,7 @@ if img_file_buffer is not None:
     # Load the image into the array
     data[0] = normalized_image_array
 
-   prediction = model.predict(data)
+ prediction = model.predict(data)
 
 print(prediction)
 
