@@ -8,6 +8,12 @@ import numpy as np
 from PIL import Image as Image, ImageOps as ImagOps
 from keras.models import load_model
 
+
+max_prob = 0
+
+
+
+
 def on_publish(client,userdata,result):             #create function for callback
     print("el dato ha sido publicado \n")
     pass
@@ -57,7 +63,7 @@ if img_file_buffer is not None:
     isa_prob   = prediction[0][0] * 100
     salo_prob  = prediction[0][1] * 100
     angie_prob = prediction[0][2] * 100
-
+    max_prob = max(isa_prob, salo_prob, angie_prob)
 # =====================================================
 # OBTENER PROBABILIDADES
 # =====================================================
@@ -65,7 +71,7 @@ if img_file_buffer is not None:
 # =====================================================
 # MAYOR PROBABILIDAD
 # =====================================================
-max_prob = max(isa_prob, salo_prob, angie_prob)
+
 
 # =====================================================
 # DESCONOCIDO
