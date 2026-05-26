@@ -54,13 +54,13 @@ if img_file_buffer is not None:
     prediction = model.predict(data)
 
     print(prediction)
+    isa_prob   = prediction[0][0] * 100
+    salo_prob  = prediction[0][1] * 100
+    angie_prob = prediction[0][2] * 100
 
 # =====================================================
 # OBTENER PROBABILIDADES
 # =====================================================
-isa_prob   = prediction[0][0] * 100
-salo_prob  = prediction[0][1] * 100
-angie_prob = prediction[0][2] * 100
 
 # =====================================================
 # MAYOR PROBABILIDAD
