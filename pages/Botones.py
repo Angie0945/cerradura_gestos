@@ -141,7 +141,7 @@ st.markdown('<br>', unsafe_allow_html=True)
 # BOTÓN APAGAR
 # =====================================================
 if st.button('APAGAR'):
-    act1 = "APAGAR LA ALARMA"
+    act1 = "APAGAR ALARMA"
     client1 = paho.Client("GIT-HUBA")                           
     client1.on_publish = on_publish                          
     client1.connect(broker, port)  
