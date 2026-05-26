@@ -62,3 +62,5 @@ if img_file_buffer is not None:
       st.header('Cerrando')
       client1.publish("Guardian_vision","{'gesto': 'Cierra'}",qos=0, retain=False)
       time.sleep(0.2)  
+
+    
