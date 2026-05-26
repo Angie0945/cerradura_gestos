@@ -9,7 +9,7 @@ import base64
 # =====================================================
 # CONFIGURACIÓN DE PÁGINA Y ESTILOS AVANZADOS (CSS)
 # =====================================================
-st.set_page_config(page_title="MQTT Control Premium", page_icon="🎛️", layout="centered")
+st.set_page_config(page_title="MQTT Control Hub", page_icon="🎛️", layout="centered")
 
 # Inyección de CSS premium basado en la referencia técnica
 st.markdown("""
@@ -40,12 +40,12 @@ st.markdown("""
     
     .main-title {
         color: #FFFFFF;
-        font-size: 2.6rem;
+        font-size: 2.8rem;
         font-weight: 800;
         text-transform: uppercase;
-        letter-spacing: 1px;
+        letter-spacing: 1.5px;
         margin-bottom: 0.2rem;
-        text-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+        text-shadow: 0 0 25px rgba(0, 212, 255, 0.35);
     }
     
     .subtitle {
@@ -62,23 +62,6 @@ st.markdown("""
         border-radius: 12px;
         border: 2px solid rgba(56, 189, 248, 0.15);
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-    }
-
-    /* Info de versión sutil integrada arriba */
-    .version-text {
-        color: #475569;
-        font-size: 0.85rem;
-        text-align: center;
-        margin-bottom: 1.5rem;
-        background: rgba(13, 27, 42, 0.4);
-        padding: 0.4rem 1rem;
-        border-radius: 20px;
-        display: inline-block;
-        border: 1px solid rgba(56, 189, 248, 0.05);
-    }
-    
-    .version-container {
-        text-align: center;
     }
     
     /* Selector Robusto para Botones de Streamlit */
@@ -147,9 +130,6 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Muestra la versión de Python de manera más integrada al diseño
-st.markdown(f'<div class="version-container"><p class="version-text">⚙️ Python v{platform.python_version()}</p></div>', unsafe_allow_html=True)
-
 act1 = "OFF"
 
 def on_publish(client, userdata, result):
@@ -167,15 +147,15 @@ port = 1883
 client1 = paho.Client("GIT-HUBA")
 client1.on_message = on_message
 
-# Encabezado Premium con imagen integrada
+# Encabezado Premium con imagen integrada y título llamativo actualizado
 # Abrimos la imagen Camara 2.png y la mostramos con base64 para CSS
 with open("Camara 2.png", "rb") as image_file:
     encoded_string = base64.b64encode(image_file.read()).decode()
 
 st.markdown(f"""
     <div class="header-container">
-        <div class="main-title">MQTT CONTROL HUB</div>
-        <div class="subtitle">CONTROL REMOTO DE ALARMAS</div>
+        <div class="main-title">🎛️ MQTT CONTROL HUB</div>
+        <div class="subtitle">SISTEMA DE CONTROL DE ACCESO REMOTO</div>
         <img src="data:image/png;base64,{encoded_string}" class="control-hub-img" alt="Cámara 2">
     </div>
 """, unsafe_allow_html=True)
