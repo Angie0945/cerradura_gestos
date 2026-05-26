@@ -51,72 +51,82 @@ if img_file_buffer is not None:
     # Load the image into the array
     data[0] = normalized_image_array
 
-    prediction = model.predict(data)
+   prediction = model.predict(data)
 
 print(prediction)
 
 # =====================================================
-# ISA
+# OBTENER PROBABILIDADES
 # =====================================================
-if prediction[0][0] > 0.5:
-    client1.publish("Guardian_vision", "{'gesto':'isa'}",qos=0, retain=False)
-    probabilidad = round(prediction[0][0] * 100, 2)
+isa_prob   = prediction[0][0] * 100
+salo_prob  = prediction[0][1] * 100
+angie_prob = prediction[0][2] * 100
+
+# =====================================================
+# MAYOR PROBABILIDAD
+# =====================================================
+max_prob = max(isa_prob, salo_prob, angie_prob)
+
+# =====================================================
+# DESCONOCIDO
+# =====================================================
+if max_prob < 40:
 
     st.header(
-        '✅ ISA reconocida, Probabilidad: '
-        + str(probabilidad) + '%'
+        f'🚨 PERSONA DESCONOCIDA | Probabilidad: {max_prob:.2f}%'
+    )
+
+    client1.publish(
+        "Guardian_vision",
+        "{'gesto':'desconocido'}",
+        qos=0,
+        retain=False
+    )
+
+# =====================================================
+# ISA
+# =====================================================
+elif isa_prob == max_prob:
+
+    st.header(
+        f'✅ ISA reconocida | Probabilidad: {isa_prob:.2f}%'
+    )
+
+    client1.publish(
+        "Guardian_vision",
+        "{'gesto':'isa'}",
+        qos=0,
+        retain=False
     )
 
 # =====================================================
 # SALO
 # =====================================================
-elif prediction[0][1] > 0.5:
-    client1.publish("Guardian_vision", "{'gesto':'salo'}",qos=0, retain=False)
-    probabilidad = round(prediction[0][1] * 100, 2)
+elif salo_prob == max_prob:
 
     st.header(
-        '✅ SALO reconocida, Probabilidad: '
-        + str(probabilidad) + '%'
+        f'✅ SALO reconocida | Probabilidad: {salo_prob:.2f}%'
+    )
+
+    client1.publish(
+        "Guardian_vision",
+        "{'gesto':'salo'}",
+        qos=0,
+        retain=False
     )
 
 # =====================================================
 # ANGIE
 # =====================================================
-elif prediction[0][2] > 0.5:
-    client1.publish("Guardian_vision", "{'gesto':'angie'}",qos=0, retain=False)
-    probabilidad = round(prediction[0][2] * 100, 2)
+elif angie_prob == max_prob:
 
     st.header(
-        '✅ ANGIE reconocida, Probabilidad: '
-        + str(probabilidad) + '%'
+        f'✅ ANGIE reconocida | Probabilidad: {angie_prob:.2f}%'
     )
 
-# =====================================================
-# DESCONOCIDO
-# =====================================================
-elif prediction[0][2] > 0.1:
-    client1.publish("Guardian_vision", "{'gesto':'desconocido'}",qos=0, retain=False)
-    probabilidad = round(prediction[0][2] * 100, 2)
-
-    st.header(
-        'Persona desconocida, Probabilidad: '
-        + str(probabilidad) + '%'
+    client1.publish(
+        "Guardian_vision",
+        "{'gesto':'angie'}",
+        qos=0,
+        retain=False
     )
-
-
-
-
-else:
-
-    mayor_probabilidad = round(max(prediction[0]) * 100, 2)
-
-    st.header(
-        '🚨 PERSONA DESCONOCIDA | Probabilidad máxima: '
-        + str(mayor_probabilidad) + '%'
-    )
-
-
-
-
-
-    
