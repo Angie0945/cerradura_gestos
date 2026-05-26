@@ -94,6 +94,18 @@ elif prediction[0][2] > 0.5:
 # =====================================================
 # DESCONOCIDO
 # =====================================================
+elif prediction[0][2] > 0.1:
+    client1.publish("Guardian_vision", "{'gesto':'desconocido'}",qos=0, retain=False)
+    probabilidad = round(prediction[0][2] * 100, 2)
+
+    st.header(
+        'Persona desconocida, Probabilidad: '
+        + str(probabilidad) + '%'
+    )
+
+
+
+
 else:
 
     mayor_probabilidad = round(max(prediction[0]) * 100, 2)
@@ -102,5 +114,9 @@ else:
         '🚨 PERSONA DESCONOCIDA | Probabilidad máxima: '
         + str(mayor_probabilidad) + '%'
     )
+
+
+
+
 
     
