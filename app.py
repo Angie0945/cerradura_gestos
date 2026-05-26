@@ -59,7 +59,7 @@ print(prediction)
 # ISA
 # =====================================================
 if prediction[0][0] > 0.5:
-    client1.publish("Guardian_vision", "{'gesto':'ISA'}",qos=0, retain=False)
+    client1.publish("Guardian_vision", "{'gesto':'isa'}",qos=0, retain=False)
     probabilidad = round(prediction[0][0] * 100, 2)
 
     st.header(
@@ -71,7 +71,7 @@ if prediction[0][0] > 0.5:
 # SALO
 # =====================================================
 elif prediction[0][1] > 0.5:
-    client1.publish("Guardian_vision", "{'gesto':'Salo'}",qos=0, retain=False)
+    client1.publish("Guardian_vision", "{'gesto':'salo'}",qos=0, retain=False)
     probabilidad = round(prediction[0][1] * 100, 2)
 
     st.header(
@@ -83,7 +83,7 @@ elif prediction[0][1] > 0.5:
 # ANGIE
 # =====================================================
 elif prediction[0][2] > 0.5:
-    client1.publish("Guardian_vision", "{'gesto':'Angie'}",qos=0, retain=False)
+    client1.publish("Guardian_vision", "{'gesto':'angie'}",qos=0, retain=False)
     probabilidad = round(prediction[0][2] * 100, 2)
 
     st.header(
