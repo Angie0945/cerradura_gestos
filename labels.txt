@@ -1,0 +1,3 @@
+0 isa
+1 salo
+2 angie
