@@ -3,6 +3,8 @@ import time
 import streamlit as st
 import json
 import platform
+# Necesario para integrar imágenes con base64 en CSS
+import base64
 
 # =====================================================
 # CONFIGURACIÓN DE PÁGINA Y ESTILOS AVANZADOS (CSS)
@@ -14,7 +16,7 @@ st.markdown("""
     <style>
     /* Fondo principal con degradado sutil y oscuro de alta tecnología */
     .stApp {
-        background: radial-gradient(circle at top left, #0A192F 0%, #020C1B 100%);
+        background: radial-gradient(circle at top right, #0A192F 0%, #020C1B 100%);
         color: #E2E8F0;
         font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
     }
@@ -24,12 +26,16 @@ st.markdown("""
         padding: 3rem 2rem;
     }
     
-    /* Header Principal Estilo Panel de Control */
+    /* Header Principal Estilo Panel de Control con Imagen */
     .header-container {
         text-align: center;
         margin-bottom: 2rem;
         padding: 1.5rem;
         border-bottom: 1px solid rgba(56, 189, 248, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
     }
     
     .main-title {
@@ -38,7 +44,7 @@ st.markdown("""
         font-weight: 800;
         text-transform: uppercase;
         letter-spacing: 1px;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.2rem;
         text-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
     }
     
@@ -48,6 +54,14 @@ st.markdown("""
         font-weight: 300;
         letter-spacing: 0.5px;
         opacity: 0.9;
+    }
+    
+    .control-hub-img {
+        max-width: 150px; /* Ajusta el tamaño según sea necesario */
+        height: auto;
+        border-radius: 12px;
+        border: 2px solid rgba(56, 189, 248, 0.15);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
     }
 
     /* Info de versión sutil integrada arriba */
@@ -153,11 +167,16 @@ port = 1883
 client1 = paho.Client("GIT-HUBA")
 client1.on_message = on_message
 
-# Títulos estilizados con estructura de contenedor limpia
-st.markdown("""
+# Encabezado Premium con imagen integrada
+# Abrimos la imagen Camara 2.png y la mostramos con base64 para CSS
+with open("Camara 2.png", "rb") as image_file:
+    encoded_string = base64.b64encode(image_file.read()).decode()
+
+st.markdown(f"""
     <div class="header-container">
-        <div class="main-title">🎛️ MQTT CONTROL HUB</div>
-        <div class="subtitle">PANEL DE CONTROL REMOTO DE ALARMAS</div>
+        <div class="main-title">MQTT CONTROL HUB</div>
+        <div class="subtitle">CONTROL REMOTO DE ALARMAS</div>
+        <img src="data:image/png;base64,{encoded_string}" class="control-hub-img" alt="Cámara 2">
     </div>
 """, unsafe_allow_html=True)
 
@@ -193,4 +212,4 @@ else:
     st.write('')
 
 # Footer estético al final de la página
-st.markdown('<div class="custom-footer">🔒 Guardian Vision AI Engine • Sistema de Control Encriptado End-to-End</div>', unsafe_allow_html=True)
+st.markdown('<div class="custom-footer">🔒 Guardian Vision AI Engine • Sistema de Control Encriptado por: Isa, Salo y Angie </div>', unsafe_allow_html=True)
