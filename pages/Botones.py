@@ -5,99 +5,136 @@ import json
 import platform
 
 # =====================================================
-# CONFIGURACIÓN DE PÁGINA Y ESTILOS (CSS)
+# CONFIGURACIÓN DE PÁGINA Y ESTILOS AVANZADOS (CSS)
 # =====================================================
-st.set_page_config(page_title="MQTT Control", page_icon="🎛️", layout="centered")
+st.set_page_config(page_title="MQTT Control Premium", page_icon="🎛️", layout="centered")
 
-# Inyección de CSS para diseño profesional en Azules, Negro y Blanco
+# Inyección de CSS premium basado en la referencia técnica
 st.markdown("""
     <style>
-    /* Fondo de la app y color de texto principal */
+    /* Fondo principal con degradado sutil y oscuro de alta tecnología */
     .stApp {
-        background-color: #0B0F19;
-        color: #F8FAFC;
+        background: radial-gradient(circle at top left, #0A192F 0%, #020C1B 100%);
+        color: #E2E8F0;
+        font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
     }
     
     /* Contenedor principal */
     .stMainBlockContainer {
-        padding: 2rem 3rem;
+        padding: 3rem 2rem;
     }
     
-    /* Título Principal */
-    .main-title {
-        font-family: 'Helvetica Neue', Arial, sans-serif;
-        color: #FFFFFF;
-        font-size: 2.5rem;
-        font-weight: 700;
+    /* Header Principal Estilo Panel de Control */
+    .header-container {
         text-align: center;
+        margin-bottom: 2rem;
+        padding: 1.5rem;
+        border-bottom: 1px solid rgba(56, 189, 248, 0.1);
+    }
+    
+    .main-title {
+        color: #FFFFFF;
+        font-size: 2.6rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1px;
         margin-bottom: 0.5rem;
-        letter-spacing: -0.5px;
+        text-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
     }
     
     .subtitle {
         color: #38BDF8;
-        text-align: center;
         font-size: 1.1rem;
-        margin-bottom: 2.5rem;
-        font-weight: 400;
+        font-weight: 300;
+        letter-spacing: 0.5px;
+        opacity: 0.9;
     }
 
-    /* Info de versión sutil al pie o arriba */
+    /* Info de versión sutil integrada arriba */
     .version-text {
-        color: #64748B;
+        color: #475569;
         font-size: 0.85rem;
         text-align: center;
-        margin-bottom: 2rem;
+        margin-bottom: 1.5rem;
+        background: rgba(13, 27, 42, 0.4);
+        padding: 0.4rem 1rem;
+        border-radius: 20px;
+        display: inline-block;
+        border: 1px solid rgba(56, 189, 248, 0.05);
     }
     
-    /* Estilos específicos para los botones de Streamlit */
-    /* Botón ENCENDER (Primer botón en el flujo) */
-    div.element-container:nth-of-type(4) button {
-        background-color: #1D4ED8 !important;
-        color: #FFFFFF !important;
-        border-radius: 8px !important;
-        border: 1px solid #3B82F6 !important;
-        font-weight: bold !important;
-        width: 100% !important;
-        padding: 0.75rem !important;
-        font-size: 1.1rem !important;
-        transition: background-color 0.3s ease;
-    }
-    div.element-container:nth-of-type(4) button:hover {
-        background-color: #2563EB !important;
+    .version-container {
+        text-align: center;
     }
     
-    /* Botón APAGAR (Segundo botón en el flujo) */
-    div.element-container:nth-of-type(6) button {
-        background-color: #1E293B !important;
-        color: #F8FAFC !important;
-        border-radius: 8px !important;
-        border: 1px solid #475569 !important;
-        font-weight: bold !important;
+    /* Selector Robusto para Botones de Streamlit */
+    div.stButton > button {
         width: 100% !important;
-        padding: 0.75rem !important;
+        border-radius: 30px !important;
+        padding: 0.75rem 2rem !important;
         font-size: 1.1rem !important;
-        transition: background-color 0.3s ease;
+        font-weight: 700 !important;
+        letter-spacing: 1px !important;
+        transition: all 0.3s ease !important;
+        text-transform: uppercase;
     }
-    div.element-container:nth-of-type(6) button:hover {
-        background-color: #334155 !important;
+
+    /* Estilo específico para el botón ENCENDER */
+    div.stButton > button:has(p:contains("ENCENDER")) {
+        background: linear-gradient(90deg, #00D4FF 0%, #0076FF 100%) !important;
+        color: white !important;
+        border: none !important;
+        box-shadow: 0 4px 15px rgba(0, 118, 255, 0.3) !important;
+    }
+    
+    div.stButton > button:has(p:contains("ENCENDER")):hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 212, 255, 0.5) !important;
+    }
+
+    /* Estilo específico para el botón APAGAR */
+    div.stButton > button:has(p:contains("APAGAR")) {
+        background: rgba(15, 23, 42, 0.8) !important;
+        color: #94A3B8 !important;
+        border: 1px solid rgba(148, 163, 184, 0.2) !important;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2) !important;
+    }
+    
+    div.stButton > button:has(p:contains("APAGAR")):hover {
+        background: rgba(30, 41, 59, 0.9) !important;
+        color: #F1F5F9 !important;
+        border-color: rgba(148, 163, 184, 0.5) !important;
+        transform: translateY(-2px);
     }
 
     /* Mensajes de estado debajo de los botones */
     .status-msg {
         text-align: center;
-        background-color: #1E293B;
-        padding: 0.5rem;
-        border-radius: 6px;
-        margin-top: 0.5rem;
+        background: linear-gradient(135deg, rgba(15, 23, 42, 0.6) 0%, rgba(30, 41, 59, 0.6) 100%);
+        padding: 0.8rem;
+        border-radius: 12px;
+        margin-top: 0.8rem;
         color: #38BDF8;
-        font-weight: 500;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        border: 1px solid rgba(56, 189, 248, 0.15);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Footer corporativo sutil */
+    .custom-footer {
+        text-align: center;
+        font-size: 0.8rem;
+        color: #475569;
+        margin-top: 5rem;
+        border-top: 1px solid rgba(255,255,255,0.05);
+        padding-top: 1.5rem;
     }
     </style>
 """, unsafe_allow_html=True)
 
 # Muestra la versión de Python de manera más integrada al diseño
-st.markdown(f'<p class="version-text">Versión de Python en entorno: {platform.python_version()}</p>', unsafe_allow_html=True)
+st.markdown(f'<div class="version-container"><p class="version-text">⚙️ Python v{platform.python_version()}</p></div>', unsafe_allow_html=True)
 
 act1 = "OFF"
 
@@ -116,21 +153,25 @@ port = 1883
 client1 = paho.Client("GIT-HUBA")
 client1.on_message = on_message
 
-# Títulos estilizados con HTML
-st.markdown('<h1 class="main-title">🎛️ MQTT Control</h1>', unsafe_allow_html=True)
-st.markdown('<p class="subtitle">Panel de Control Remoto de Alarmas</p>', unsafe_allow_html=True)
+# Títulos estilizados con estructura de contenedor limpia
+st.markdown("""
+    <div class="header-container">
+        <div class="main-title">🎛️ MQTT CONTROL HUB</div>
+        <div class="subtitle">PANEL DE CONTROL REMOTO DE ALARMAS</div>
+    </div>
+""", unsafe_allow_html=True)
 
 # =====================================================
 # BOTÓN ENCENDER
 # =====================================================
 if st.button('ENCENDER'):
     act1 = "ENCIENDE ALARMA"
-    client1 = paho.Client("GIT-HUBA")                           
+    client1 = paho.Client("GIT-HUBA")                            
     client1.on_publish = on_publish                          
     client1.connect(broker, port)  
     message = json.dumps({"gesto": act1})
     ret = client1.publish("Guardian_vision", message)
-    st.markdown('<div class="status-msg">📡 Comando enviado: ENCIENDE ALARMA</div>', unsafe_allow_html=True)
+    st.markdown('<div class="status-msg">📡 TRANSMITIENDO: ENCIENDE ALARMA</div>', unsafe_allow_html=True)
 else:
     st.write('')
 
@@ -142,11 +183,14 @@ st.markdown('<br>', unsafe_allow_html=True)
 # =====================================================
 if st.button('APAGAR'):
     act1 = "APAGAR ALARMA"
-    client1 = paho.Client("GIT-HUBA")                           
+    client1 = paho.Client("GIT-HUBA")                            
     client1.on_publish = on_publish                          
     client1.connect(broker, port)  
     message = json.dumps({"gesto": act1})
     ret = client1.publish("Guardian_vision", message)
-    st.markdown('<div class="status-msg">📡 Comando enviado: APAGAR LA ALARMA</div>', unsafe_allow_html=True)
+    st.markdown('<div class="status-msg">📡 TRANSMITIENDO: APAGAR LA ALARMA</div>', unsafe_allow_html=True)
 else:
     st.write('')
+
+# Footer estético al final de la página
+st.markdown('<div class="custom-footer">🔒 Guardian Vision AI Engine • Sistema de Control Encriptado End-to-End</div>', unsafe_allow_html=True)
