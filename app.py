@@ -76,7 +76,7 @@ if img_file_buffer is not None:
 # =====================================================
 # DESCONOCIDO
 # =====================================================
-if max_prob < 60:
+if max_prob < 85:
 
     st.header(
         f'🚨 PERSONA DESCONOCIDA | Probabilidad: {max_prob:.2f}%'
