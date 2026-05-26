@@ -51,16 +51,56 @@ if img_file_buffer is not None:
     # Load the image into the array
     data[0] = normalized_image_array
 
-    # run the inference
     prediction = model.predict(data)
-    print(prediction)
-    if prediction[0][0]>0.3:
-      st.header('Abriendo')
-      client1.publish("Guardian_vision","{'gesto': 'Abre'}",qos=0, retain=False)
-      time.sleep(0.2)
-    if prediction[0][1]>0.3:
-      st.header('Cerrando')
-      client1.publish("Guardian_vision","{'gesto': 'Cierra'}",qos=0, retain=False)
-      time.sleep(0.2)  
+
+print(prediction)
+
+# =====================================================
+# ISA
+# =====================================================
+if prediction[0][0] > 0.5:
+
+    probabilidad = round(prediction[0][0] * 100, 2)
+
+    st.header(
+        '✅ ISA reconocida, Probabilidad: '
+        + str(probabilidad) + '%'
+    )
+
+# =====================================================
+# SALO
+# =====================================================
+elif prediction[0][1] > 0.5:
+
+    probabilidad = round(prediction[0][1] * 100, 2)
+
+    st.header(
+        '✅ SALO reconocida, Probabilidad: '
+        + str(probabilidad) + '%'
+    )
+
+# =====================================================
+# ANGIE
+# =====================================================
+elif prediction[0][2] > 0.5:
+
+    probabilidad = round(prediction[0][2] * 100, 2)
+
+    st.header(
+        '✅ ANGIE reconocida, Probabilidad: '
+        + str(probabilidad) + '%'
+    )
+
+# =====================================================
+# DESCONOCIDO
+# =====================================================
+else:
+
+    mayor_probabilidad = round(max(prediction[0]) * 100, 2)
+
+    st.header(
+        '🚨 PERSONA DESCONOCIDA | Probabilidad máxima: '
+        + str(mayor_probabilidad) + '%'
+    )
 
     
