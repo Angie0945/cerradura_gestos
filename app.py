@@ -53,7 +53,7 @@ if img_file_buffer is not None:
 
     prediction = model.predict(data)
 
-print(prediction)
+    print(prediction)
 
 # =====================================================
 # OBTENER PROBABILIDADES
