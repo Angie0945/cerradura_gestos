@@ -9,7 +9,7 @@ import base64
 # =====================================================
 # CONFIGURACIÓN DE PÁGINA Y ESTILOS AVANZADOS (CSS)
 # =====================================================
-st.set_page_config(page_title="MQTT Control Hub", page_icon="🎛️", layout="centered")
+st.set_page_config(page_title="Controles", page_icon="🎛️", layout="centered")
 
 # Inyección de CSS premium basado en la referencia técnica
 st.markdown("""
