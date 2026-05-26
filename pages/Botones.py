@@ -37,7 +37,7 @@ if st.button('ENCENDER'):
     client1= paho.Client("GIT-HUBA")                           
     client1.on_publish = on_publish                          
     client1.connect(broker,port)  
-    message =json.dumps({"Act1":act1})
+    message =json.dumps({"gesto":act1})
     ret= client1.publish("Guardian_vision", message)
  
     #client1.subscribe("Sensores")
@@ -51,7 +51,7 @@ if st.button('APAGAR'):
     client1= paho.Client("GIT-HUBA")                           
     client1.on_publish = on_publish                          
     client1.connect(broker,port)  
-    message =json.dumps({"Act1":act1})
+    message =json.dumps({"gesto":act1})
     ret= client1.publish("Guardian_vision", message)
   
     
