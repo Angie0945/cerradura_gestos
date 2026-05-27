@@ -27,27 +27,45 @@ st.markdown("""
         padding: 3rem 2rem;
     }
     
-    /* Header Principal Estilo Landing Page */
+    /* Header Principal Estilo Landing Page con Imagen Integrada */
     .header-container {
-        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1.5rem;
         margin-bottom: 2.5rem;
         padding: 1.5rem;
         border-bottom: 1px solid rgba(56, 189, 248, 0.1);
+        background: rgba(13, 27, 42, 0.3);
+        border-radius: 16px;
+    }
+    
+    .header-img {
+        width: 100px; /* Ajusta el tamaño según sea necesario */
+        height: 100px;
+        object-fit: cover;
+        border-radius: 50%; /* Hace la imagen circular */
+        border: 3px solid rgba(56, 189, 248, 0.2);
+        box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+    }
+    
+    .header-text {
+        text-align: left;
     }
     
     .main-title {
         color: #FFFFFF;
-        font-size: 2.8rem;
+        font-size: 2.5rem;
         font-weight: 800;
         text-transform: uppercase;
         letter-spacing: 1px;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.2rem;
         text-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
     }
     
     .subtitle {
         color: #38BDF8;
-        font-size: 1.1rem;
+        font-size: 1rem;
         font-weight: 300;
         letter-spacing: 0.5px;
         opacity: 0.9;
@@ -96,7 +114,7 @@ st.markdown("""
         margin-top: 0.5rem;
     }
     
-    /* Optimización del input de Cámara de Streamlit para acoplarse al diseño */
+    /* Optimización del input de Cámara de Streamlit */
     div[data-testid="stCameraInput"] {
         border: 2px dashed rgba(56, 189, 248, 0.25) !important;
         border-radius: 16px !important;
@@ -155,32 +173,33 @@ client1.connect(broker, port)
 model = load_model('keras_model.h5')
 data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
 
-# Encabezado Premium con estilo limpio y tecnológico
-st.markdown("""
+# Encabezado Premium con imagen integrada
+# Abrimos la imagen Camara 1.jpg y la mostramos con base64 para CSS
+import base64
+with open("Camara 1.jpg", "rb") as image_file:
+    encoded_string = base64.b64encode(image_file.read()).decode()
+
+st.markdown(f"""
     <div class="header-container">
-        <div class="main-title">🔒 CERRADURA INTELIGENTE 360</div>
-        <div class="subtitle">SISTEMA DE CONTROL DE ACCESO POR RECONOCIMIENTO FACIAL</div>
+        <img src="data:image/jpeg;base64,{encoded_string}" class="header-img" alt="Cámara 1">
+        <div class="header-text">
+            <div class="main-title">CERRADURA INTELIGENTE</div>
+            <div class="subtitle">CONTROL DE ACCESO FACIAL</div>
+        </div>
     </div>
 """, unsafe_allow_html=True)
 
 img_file_buffer = st.camera_input("Identifíquese frente a la cámara")
 
 if img_file_buffer is not None:
-    # To read image file buffer with OpenCV:
+    # ... (Misma lógica funcional que antes)
     data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
-    # To read image file buffer as a PIL Image:
     img = Image.open(img_file_buffer)
-
     newsize = (224, 224)
     img = img.resize(newsize)
-    # To convert PIL Image to numpy array:
     img_array = np.array(img)
-
-    # Normalize the image
     normalized_image_array = (img_array.astype(np.float32) / 127.0) - 1
-    # Load the image into the array
     data[0] = normalized_image_array
-
     prediction = model.predict(data)
 
     print(prediction)
@@ -277,5 +296,5 @@ if img_file_buffer is not None:
             retain=False
         )
 
-# Footer estético al final de la página
+# Footer estético
 st.markdown('<div class="custom-footer">🔒 Guardian Vision AI Engine • Sistema de Seguridad Encriptado</div>', unsafe_allow_html=True)
