@@ -154,7 +154,7 @@ with open("Camara 2.png", "rb") as image_file:
 
 st.markdown(f"""
     <div class="header-container">
-        <div class="main-title">🎛️ MQTT CONTROL HUB</div>
+        <div class="main-title">🎛️ CONTROL </div>
         <div class="subtitle">SISTEMA DE CONTROL DE ACCESO REMOTO</div>
         <img src="data:image/png;base64,{encoded_string}" class="control-hub-img" alt="Cámara 2">
     </div>
